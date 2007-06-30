@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="150" title="Nickname">
+	<mx:TextInput x="60" y="25"/>
+	<mx:Button x="107" y="78" label="Change"/>
+	
+</mx:Panel>
