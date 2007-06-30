@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" width="400" height="300" label="Servers" title="Servers">
+	<mx:List height="100%" width="50%"></mx:List>
+	<mx:VBox height="100%" width="50%">
+		<mx:Form>
+			<mx:FormItem label="Server: ">
+				<mx:Label text="*server name*"/>
+			</mx:FormItem>
+			<mx:FormItem label="address: ">
+				<mx:TextInput width="120"/>
+			</mx:FormItem>
+			<mx:FormItem label="port:">
+				<mx:TextInput width="50"/>
+			</mx:FormItem>
+			<mx:FormItem label="encoding:">
+				<mx:ComboBox width="120" dataProvider="[utf-8,euc-kr,ascii]"></mx:ComboBox>
+			</mx:FormItem>
+			<mx:CheckBox label="connect on startup"/>
+			<mx:Button label="Save" enabled="false"/>
+		</mx:Form>
+		<mx:Button label="Connect"/>
+	</mx:VBox>
+	
+</mx:Panel>
