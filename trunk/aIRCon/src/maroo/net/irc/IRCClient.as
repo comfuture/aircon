@@ -55,8 +55,12 @@ package maroo.net.irc
 		
 		private function onConnect(event:Event):void
 		{
+			_connected = true;
 			if (nick != null) {
 				register(new IRCUser(nick));
+			} else {
+				register(new IRCUser("airc_" + String(Math.ceil(Math.random() * 5))));
+				dispatchEvent(new Event("requestNick"));
 			}
 		}
 		
