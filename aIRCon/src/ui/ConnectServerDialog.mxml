@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" width="400" height="300" label="Servers" title="Servers">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" width="400" height="300" label="Servers" title="Servers" backgroundColor="#E6E6E6">
 	<mx:List height="100%" width="50%"></mx:List>
 	<mx:VBox height="100%" width="50%">
 		<mx:Form>
@@ -18,7 +18,8 @@
 			<mx:CheckBox label="connect on startup"/>
 			<mx:Button label="Save" enabled="false"/>
 		</mx:Form>
-		<mx:Button label="Connect"/>
 	</mx:VBox>
-	
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Connect"/>
+	</mx:ControlBar>
 </mx:Panel>

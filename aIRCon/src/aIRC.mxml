@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
 	xmlns:ui="ui.*">
+	<mx:Style source="themes/itunes/itunes.css" />
 	<mx:Script>
 		<![CDATA[
 			import ui.Window;
-			import mx.core.UIComponent;
 			import ui.Window;
+			import mx.managers.PopUpManager;
+			import mx.events.MenuEvent;
+			import mx.core.UIComponent;
+			import ui.*;
 			import maroo.net.irc.*;
 			import maroo.events.IRCEvent;
+			
+			private var _activeWindow:UIComponent;
+			public function get activeWindow():UIComponent
+			{
+				return _activeWindow;
+			}
+			public function set activeWindow(value:UIComponent):void
+			{
+				_activeWindow = value;
+			}
+			
 			private function connect():void
 			{
 				var irc:IRCClient = new IRCClient(new IRCServer('irc.hanirc.org', 6667, 'euc-kr'), '거친마루^air');
@@ -18,8 +33,15 @@
 			private function onMessage(event:IRCEvent):void
 			{
 				if (event.data.cmd == 'PRIVMSG') {
+					trace("PRIVMSG", event.data.params[0]);
 					if (hasTab(event.data.params[0])) {
-						
+						trace('has tab');
+					} else {
+						trace('no tab');
+						var t:Window = new Window();
+						t.label = event.data.params[0];
+						channelview.addChild(t);
+						t.push(new IRCMessage('PRIVMSG', event.data.params.join(' ')));
 					}
 				}
 				statusWindow.push(new IRCMessage(event.data.cmd, event.data.params.join(' ')));
@@ -40,9 +62,45 @@
 				*/
 				return false;
 			}
+			
+			private function onMenuSelected(event:MenuEvent):void
+			{
+				switch (event.item.action) {
+					case "connect":
+						var serverDialog:ConnectServerDialog = ConnectServerDialog(PopUpManager.createPopUp(this, ConnectServerDialog));
+						PopUpManager.centerPopUp(serverDialog);
+						break;
+					default:
+				}
+				var serverDialog:ConnectServerDialog = ConnectServerDialog(PopUpManager.createPopUp(this, ConnectServerDialog));
+				PopUpManager.centerPopUp(serverDialog);
+
+			}
 		]]>
 	</mx:Script>
-	<mx:TabNavigator id="channelview" left="10" right="10" top="10" bottom="30">
+	<mx:MenuBar x="0" y="0" width="100%" labelField="@label" itemClick="onMenuSelected(event)">
+		<mx:XMLList>
+			<menu label="File">
+				<menu label="Connect" action="connect" />
+				<menu label="test"/>
+				<menu label="test"/>
+				<menu label="test"/>
+			</menu>
+			<menu label="File1">
+				<menu label="test1"/>
+				<menu label="test2"/>
+				<menu label="test3"/>
+				<menu label="test4"/>
+			</menu>
+			<menu label="File2">
+				<menu label="test1"/>
+				<menu label="test2"/>
+				<menu label="test3"/>
+				<menu label="test4"/>
+			</menu>			
+		</mx:XMLList>
+	</mx:MenuBar>
+	<mx:TabNavigator id="channelview" left="10" right="10" top="25" bottom="30">
 		<ui:Window id="statusWindow" label="status" width="100%" height="100%"/>
 		<ui:Channel label="#air" width="100%" height="100%">
 		</ui:Channel>
@@ -54,5 +112,5 @@
 		<mx:TextInput width="100%"/>
 		<mx:PopUpButton label="send"/>
 	</mx:ApplicationControlBar>
-	<mx:Button x="371" y="10" label="connect" click="connect()" />
+	<mx:Button y="10" label="connect" click="connect()"  right="10"/>
 </mx:WindowedApplication>
